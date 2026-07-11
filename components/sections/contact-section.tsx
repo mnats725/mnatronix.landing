@@ -21,7 +21,7 @@ export function ContactSection() {
           </div>
         </Reveal>
         <div className="contacts__layout">
-          <Reveal>
+          <Reveal className="contacts__panel">
             <form className="contact-form" onSubmit={submit} noValidate aria-busy={isSubmitting}>
               <label className="honeypot" aria-hidden="true">
                 Не заполняйте это поле
@@ -83,7 +83,7 @@ export function ContactSection() {
               </div>
             </form>
           </Reveal>
-          <Reveal>
+          <Reveal className="contacts__panel">
             <aside className="contact-card">
               <div>
                 <p className="eyebrow">Напрямую</p>

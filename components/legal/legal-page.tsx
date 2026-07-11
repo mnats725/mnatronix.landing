@@ -16,7 +16,7 @@ export function LegalPage({
     <main className="legal-page">
       <div className="container">
         <header className="legal-page__header">
-          <Logo priority />
+          <Logo />
           <Link href="/">Вернуться на главную</Link>
         </header>
         <article>

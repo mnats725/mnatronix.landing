@@ -4,10 +4,9 @@ import { cn } from "@/lib/cn";
 
 type LogoProps = {
   light?: boolean;
-  priority?: boolean;
 };
 
-export function Logo({ light = false, priority = false }: LogoProps) {
+export function Logo({ light = false }: LogoProps) {
   return (
     <a
       href="#top"
@@ -16,11 +15,11 @@ export function Logo({ light = false, priority = false }: LogoProps) {
     >
       <Image
         className="logo__image"
-        src="/logo-with-text.png"
-        width={2000}
-        height={544}
+        src="/logo-with-text.svg"
+        width={875}
+        height={188}
         alt="MNATRONIX LABS"
-        priority={priority}
+        loading="lazy"
         sizes="(max-width: 760px) 150px, 184px"
       />
     </a>

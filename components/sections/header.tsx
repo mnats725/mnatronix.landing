@@ -4,18 +4,21 @@ import { Menu, MessageCircle, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { trackEvent } from "@/lib/analytics";
 import { navigation } from "@/content/site-content";
+import { useActiveSection } from "@/hooks/use-active-section";
 import { cn } from "@/lib/cn";
 import { Logo } from "@/components/ui/logo";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 
+const navigationSectionIds = navigation.map(({ href }) => href.slice(1));
+
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const activeSectionId = useActiveSection(navigationSectionIds);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const mobileMenuRef = useRef<HTMLElement>(null);
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 24);
-    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -67,13 +70,9 @@ export function Header() {
   return (
     <header className={cn("site-header", isScrolled && "site-header--scrolled")}>
       <div className="site-header__inner container">
-        <Logo priority />
+        <Logo />
         <nav className="desktop-nav" aria-label="Основная навигация">
-          {navigation.map((item) => (
-            <a key={item.href} href={item.href}>
-              {item.label}
-            </a>
-          ))}
+          <NavigationLinks activeSectionId={activeSectionId} />
         </nav>
         <div className="header-actions">
           <ThemeToggle />
@@ -106,11 +105,7 @@ export function Header() {
           aria-label="Мобильная навигация"
         >
           <div className="container">
-            {navigation.map((item) => (
-              <a key={item.href} href={item.href} onClick={closeMenu}>
-                {item.label}
-              </a>
-            ))}
+            <NavigationLinks activeSectionId={activeSectionId} onNavigate={closeMenu} />
             <div className="mobile-nav__theme">
               <span>Тема оформления</span>
               <ThemeToggle />
@@ -123,4 +118,23 @@ export function Header() {
       )}
     </header>
   );
+}
+
+function NavigationLinks({
+  activeSectionId,
+  onNavigate,
+}: {
+  activeSectionId: string | null;
+  onNavigate?: () => void;
+}) {
+  return navigation.map((item) => (
+    <a
+      key={item.href}
+      href={item.href}
+      aria-current={item.href === `#${activeSectionId}` ? "location" : undefined}
+      onClick={onNavigate}
+    >
+      {item.label}
+    </a>
+  ));
 }

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import "@fontsource-variable/manrope";
 import { AnalyticsProvider } from "@/components/analytics/analytics-provider";
 import { ClientMonitor } from "@/components/monitoring/client-monitor";
 import { ThemeProvider } from "@/components/theme/theme-provider";
@@ -20,13 +19,21 @@ export const metadata: Metadata = {
     locale: "ru_RU",
     url: "/",
     siteName: "MNATRONIX LABS",
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "MNATRONIX LABS" }],
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "MNATRONIX LABS — разработка цифровых продуктов",
+        type: "image/png",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "MNATRONIX LABS — цифровые продукты под ключ",
     description: siteConfig.description,
-    images: ["/opengraph-image"],
+    images: ["/og-image.png"],
   },
   icons: { icon: "/favicon.svg" },
 };

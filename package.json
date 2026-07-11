@@ -19,7 +19,6 @@
     "prepare": "node scripts/prepare.mjs"
   },
   "dependencies": {
-    "@fontsource-variable/manrope": "^5.2.8",
     "@sentry/browser": "^10.65.0",
     "@sentry/nextjs": "^10.65.0",
     "lucide-react": "^0.468.0",
