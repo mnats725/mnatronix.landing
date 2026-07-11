@@ -1,19 +1,12 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import Script from "next/script";
+import "@fontsource-variable/manrope";
 import { AnalyticsProvider } from "@/components/analytics/analytics-provider";
 import { ClientMonitor } from "@/components/monitoring/client-monitor";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { siteConfig } from "@/config/site-config";
 import { getThemeBootstrapScript } from "@/lib/theme";
 import "./globals.css";
-
-const manrope = localFont({
-  src: "../public/fonts/manrope-variable.ttf",
-  variable: "--font-manrope",
-  display: "swap",
-  weight: "200 800",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -49,7 +42,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   };
 
   return (
-    <html lang="ru" className={manrope.variable} suppressHydrationWarning>
+    <html lang="ru" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: getThemeBootstrapScript() }} />
       </head>

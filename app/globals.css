@@ -75,7 +75,7 @@ body {
   margin: 0;
   color: var(--ink);
   background: var(--white);
-  font-family: var(--font-manrope), sans-serif;
+  font-family: "Manrope Variable", sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   transition:
@@ -320,6 +320,44 @@ a {
   display: none;
 }
 
+@keyframes reveal-content {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+@keyframes reveal-hero {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+@keyframes reveal-visual {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+@keyframes float-up {
+  50% {
+    transform: translateY(-8px);
+  }
+}
+@keyframes float-down {
+  50% {
+    transform: translateY(8px);
+  }
+}
+.reveal {
+  animation: reveal-content 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+}
+
 /* Hero */
 .hero {
   min-height: 92vh;
@@ -333,6 +371,9 @@ a {
   grid-template-columns: minmax(0, 1.03fr) minmax(470px, 0.97fr);
   align-items: center;
   gap: 70px;
+}
+.hero__content {
+  animation: reveal-hero 0.65s ease-out both;
 }
 .hero .eyebrow {
   display: flex;
@@ -393,6 +434,7 @@ a {
   height: 570px;
   position: relative;
   perspective: 1000px;
+  animation: reveal-visual 0.8s 0.15s ease-out both;
 }
 .hero-visual__grid,
 .cta__grid {
@@ -449,6 +491,9 @@ a {
   overflow: hidden;
   background: var(--glass-bg);
   transform: rotateY(-4deg) rotateX(2deg);
+}
+.visual-card--main:hover {
+  transform: translateY(-6px) rotateX(2deg) rotateY(-2deg);
 }
 .visual-card__top {
   height: 43px;
@@ -589,10 +634,12 @@ a {
 .floating-tile--code {
   left: -25px;
   bottom: 62px;
+  animation: float-up 5s ease-in-out infinite;
 }
 .floating-tile--layers {
   right: -16px;
   top: 62px;
+  animation: float-down 6s ease-in-out infinite;
 }
 .visual-arrow {
   position: absolute;
@@ -1456,6 +1503,7 @@ a {
     overflow: hidden;
     background: var(--white);
     border-top: 1px solid var(--line);
+    animation: reveal-content 0.2s ease-out both;
   }
   .mobile-nav .container {
     padding: 16px 0 25px;

@@ -11,7 +11,7 @@ export default function GlobalError({
 }) {
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
-      void import("@sentry/nextjs").then((Sentry) => Sentry.captureException(error));
+      void import("@sentry/browser").then((Sentry) => Sentry.captureException(error));
     }
   }, [error]);
   return (

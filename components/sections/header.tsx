@@ -1,6 +1,5 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import { Menu, MessageCircle, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { trackEvent } from "@/lib/analytics";
@@ -99,34 +98,29 @@ export function Header() {
           {isOpen ? <X /> : <Menu />}
         </button>
       </div>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.nav
-            id="mobile-menu"
-            className="mobile-nav"
-            ref={mobileMenuRef}
-            aria-label="Мобильная навигация"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-          >
-            <div className="container">
-              {navigation.map((item) => (
-                <a key={item.href} href={item.href} onClick={closeMenu}>
-                  {item.label}
-                </a>
-              ))}
-              <div className="mobile-nav__theme">
-                <span>Тема оформления</span>
-                <ThemeToggle />
-              </div>
-              <a className="button button--primary" href="#contacts" onClick={closeMenu}>
-                Обсудить проект
+      {isOpen && (
+        <nav
+          id="mobile-menu"
+          className="mobile-nav"
+          ref={mobileMenuRef}
+          aria-label="Мобильная навигация"
+        >
+          <div className="container">
+            {navigation.map((item) => (
+              <a key={item.href} href={item.href} onClick={closeMenu}>
+                {item.label}
               </a>
+            ))}
+            <div className="mobile-nav__theme">
+              <span>Тема оформления</span>
+              <ThemeToggle />
             </div>
-          </motion.nav>
-        )}
-      </AnimatePresence>
+            <a className="button button--primary" href="#contacts" onClick={closeMenu}>
+              Обсудить проект
+            </a>
+          </div>
+        </nav>
+      )}
     </header>
   );
 }

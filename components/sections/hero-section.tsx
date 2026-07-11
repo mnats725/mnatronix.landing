@@ -1,6 +1,3 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Code2, Layers3 } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button-link";
 
@@ -12,16 +9,10 @@ const stats = [
 ];
 
 export function HeroSection() {
-  const reducedMotion = useReducedMotion();
   return (
     <section className="hero" id="top">
       <div className="hero__grid container">
-        <motion.div
-          className="hero__content"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: reducedMotion ? 0 : 0.65 }}
-        >
+        <div className="hero__content">
           <p className="eyebrow">
             <span />
             Разработка цифровых продуктов под ключ
@@ -47,22 +38,16 @@ export function HeroSection() {
               </div>
             ))}
           </div>
-        </motion.div>
-        <motion.div
+        </div>
+        <div
           className="hero-visual"
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: reducedMotion ? 0 : 0.8, delay: reducedMotion ? 0 : 0.15 }}
           aria-label="Абстрактная композиция цифрового интерфейса"
           role="img"
         >
           <div className="hero-visual__grid" />
           <div className="hero-visual__orb" />
           <span className="hero-visual__code">01 / DIGITAL SYSTEM</span>
-          <motion.div
-            className="visual-card visual-card--main"
-            whileHover={reducedMotion ? {} : { y: -6, rotateX: 2, rotateY: -2 }}
-          >
+          <div className="visual-card visual-card--main">
             <div className="visual-card__top">
               <span>
                 <i />
@@ -99,33 +84,25 @@ export function HeroSection() {
                 </div>
               </div>
             </div>
-          </motion.div>
-          <motion.div
-            className="floating-tile floating-tile--code"
-            animate={reducedMotion ? {} : { y: [0, -8, 0] }}
-            transition={{ duration: 5, repeat: Infinity }}
-          >
+          </div>
+          <div className="floating-tile floating-tile--code">
             <Code2 />
             <span>
               <b>Clean code</b>
               <small>Scalable architecture</small>
             </span>
-          </motion.div>
-          <motion.div
-            className="floating-tile floating-tile--layers"
-            animate={reducedMotion ? {} : { y: [0, 8, 0] }}
-            transition={{ duration: 6, repeat: Infinity }}
-          >
+          </div>
+          <div className="floating-tile floating-tile--layers">
             <Layers3 />
             <span>
               <b>UI System</b>
               <small>24 components</small>
             </span>
-          </motion.div>
+          </div>
           <div className="visual-arrow">
             <ArrowRight />
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
