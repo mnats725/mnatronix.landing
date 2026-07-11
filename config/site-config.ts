@@ -5,10 +5,10 @@ export const siteConfig = {
   description:
     "Создаём сайты, интернет-магазины и веб-сервисы любой сложности. Дизайн, разработка, запуск и техническая поддержка.",
   contacts: {
-    email: "hello@mnatronix.ru",
+    email: "mnatssteam@mail.ru",
     phone: {
-      display: "+7 999 123-45-67",
-      href: "tel:+79991234567",
+      display: "+7 900 286-72-53",
+      href: "tel:+79002867253",
     },
     telegram: {
       display: "@mnatronix",

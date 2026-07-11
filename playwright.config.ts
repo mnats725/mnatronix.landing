@@ -11,6 +11,7 @@ export default defineConfig({
   },
   projects: [
     { name: "desktop-chromium", use: { ...devices["Desktop Chrome"] } },
+    { name: "tablet-chromium", use: { viewport: { width: 820, height: 1180 } } },
     { name: "mobile-chromium", use: { ...devices["Pixel 7"] } },
   ],
   webServer: {
@@ -18,5 +19,6 @@ export default defineConfig({
     url: "http://127.0.0.1:3000",
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
+    env: { ...process.env, NEXT_PUBLIC_CONTACT_FORM_ENDPOINT: "/api/contact" },
   },
 });

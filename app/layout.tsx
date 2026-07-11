@@ -3,7 +3,9 @@ import localFont from "next/font/local";
 import Script from "next/script";
 import { AnalyticsProvider } from "@/components/analytics/analytics-provider";
 import { ClientMonitor } from "@/components/monitoring/client-monitor";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 import { siteConfig } from "@/config/site-config";
+import { getThemeBootstrapScript } from "@/lib/theme";
 import "./globals.css";
 
 const manrope = localFont({
@@ -47,9 +49,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   };
 
   return (
-    <html lang="ru" className={manrope.variable}>
+    <html lang="ru" className={manrope.variable} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: getThemeBootstrapScript() }} />
+      </head>
       <body>
-        {children}
+        <ThemeProvider>{children}</ThemeProvider>
         <AnalyticsProvider />
         <ClientMonitor />
         {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (

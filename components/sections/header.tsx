@@ -7,6 +7,7 @@ import { trackEvent } from "@/lib/analytics";
 import { navigation } from "@/content/site-content";
 import { cn } from "@/lib/cn";
 import { Logo } from "@/components/ui/logo";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -75,10 +76,17 @@ export function Header() {
             </a>
           ))}
         </nav>
-        <a className="header-cta" href="#contacts" data-analytics-event="project_discussion_click">
-          <MessageCircle size={18} aria-hidden="true" />
-          Обсудить проект
-        </a>
+        <div className="header-actions">
+          <ThemeToggle />
+          <a
+            className="header-cta"
+            href="#contacts"
+            data-analytics-event="project_discussion_click"
+          >
+            <MessageCircle size={18} aria-hidden="true" />
+            Обсудить проект
+          </a>
+        </div>
         <button
           className="menu-button"
           ref={menuButtonRef}
@@ -108,6 +116,10 @@ export function Header() {
                   {item.label}
                 </a>
               ))}
+              <div className="mobile-nav__theme">
+                <span>Тема оформления</span>
+                <ThemeToggle />
+              </div>
               <a className="button button--primary" href="#contacts" onClick={closeMenu}>
                 Обсудить проект
               </a>

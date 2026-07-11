@@ -2,6 +2,8 @@
 
 import { type FormEvent, useState } from "react";
 import { trackEvent } from "@/lib/analytics";
+import { deliverContactRequest } from "@/features/contact/infrastructure/browser-contact-delivery";
+import type { ContactRequest } from "@/features/contact/domain/contact-request";
 
 type FormState = {
   status: "idle" | "submitting" | "error" | "success";
@@ -27,14 +29,17 @@ export function useContactForm() {
     setState({ status: "submitting", message: "Отправляем заявку…" });
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(createContactPayload(new FormData(form))),
-      });
-      const result = (await response.json()) as { message?: string };
+      const delivery = await deliverContactRequest(createContactPayload(new FormData(form)));
 
-      if (!response.ok) throw new Error(result.message || "Не удалось отправить заявку");
+      if (delivery.kind === "mail-client") {
+        setState({
+          status: "success",
+          message: "Заявка подготовлена. Завершите отправку в открывшемся почтовом приложении.",
+        });
+        window.location.assign(delivery.mailtoHref);
+        trackEvent("contact_form_success");
+        return;
+      }
 
       form.reset();
       setState({
@@ -54,16 +59,21 @@ export function useContactForm() {
   return { state, submit };
 }
 
-function createContactPayload(formData: FormData) {
+function createContactPayload(formData: FormData): ContactRequest {
   return {
-    name: formData.get("name"),
-    contact: formData.get("contact"),
-    email: formData.get("email"),
-    projectType: formData.get("project-type"),
-    message: formData.get("message"),
-    budget: formData.get("budget"),
-    privacy: formData.get("privacy") === "on",
-    website: formData.get("website") ?? "",
-    turnstileToken: formData.get("cf-turnstile-response") ?? undefined,
+    name: readString(formData, "name"),
+    contact: readString(formData, "contact"),
+    email: readString(formData, "email"),
+    projectType: readString(formData, "project-type"),
+    message: readString(formData, "message"),
+    budget: readString(formData, "budget"),
+    privacy: true,
+    website: readString(formData, "website"),
+    turnstileToken: readString(formData, "cf-turnstile-response") || undefined,
   };
+}
+
+function readString(formData: FormData, fieldName: string): string {
+  const value = formData.get(fieldName);
+  return typeof value === "string" ? value : "";
 }
