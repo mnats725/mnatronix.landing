@@ -1,8 +1,9 @@
 import { Clock3 } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Reveal } from "@/components/ui/reveal";
+import type { LandingContent } from "@/content/landing-content";
 
-export function CtaSection() {
+export function CtaSection({ content }: { content: LandingContent["cta"] }) {
   return (
     <section className="section cta-section">
       <div className="container">
@@ -12,19 +13,16 @@ export function CtaSection() {
             <div className="cta__circle cta__circle--one" />
             <div className="cta__circle cta__circle--two" />
             <div className="cta__content">
-              <p className="eyebrow">Начнём с разговора</p>
-              <h2>Есть идея? Давайте превратим её в работающий продукт</h2>
-              <p>
-                Расскажите о своей задаче — мы предложим подходящее решение, оценим сроки и
-                стоимость разработки.
-              </p>
+              <p className="eyebrow">{content.eyebrow}</p>
+              <h2>{content.title}</h2>
+              <p>{content.text}</p>
               <div className="cta__actions">
                 <ButtonLink href="#contacts" variant="light">
-                  Обсудить проект
+                  {content.action}
                 </ButtonLink>
                 <span>
                   <Clock3 size={18} />
-                  Ответим в течение рабочего дня
+                  {content.note}
                 </span>
               </div>
             </div>

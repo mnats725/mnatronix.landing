@@ -5,6 +5,7 @@ import { LegalPage } from "@/components/legal/legal-page";
 export const metadata: Metadata = {
   title: `Политика конфиденциальности | ${siteConfig.name}`,
   robots: { index: true, follow: true },
+  alternates: { canonical: "/privacy", languages: { ru: "/privacy", en: "/en/privacy" } },
 };
 
 const sections = [

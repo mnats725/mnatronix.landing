@@ -1,37 +1,28 @@
 import { ArrowRight, Code2, Layers3 } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button-link";
+import type { LandingContent } from "@/content/landing-content";
 
-const stats = [
-  ["5+", "лет опыта"],
-  ["40+", "реализованных проектов"],
-  ["✓", "Работаем по договору"],
-  ["↗", "Поддержка после запуска"],
-];
-
-export function HeroSection() {
+export function HeroSection({ content }: { content: LandingContent["hero"] }) {
   return (
     <section className="hero" id="top">
       <div className="hero__grid container">
         <div className="hero__content">
           <p className="eyebrow">
             <span />
-            Разработка цифровых продуктов под ключ
+            {content.eyebrow}
           </p>
           <h1>
-            Создаём сайты и веб-сервисы <em>любой сложности</em>
+            {content.title} <em>{content.accent}</em>
           </h1>
-          <p className="hero__lead">
-            Проектируем и разрабатываем быстрые, удобные и масштабируемые цифровые продукты, которые
-            помогают бизнесу расти.
-          </p>
+          <p className="hero__lead">{content.lead}</p>
           <div className="hero__actions">
-            <ButtonLink href="#contacts">Обсудить проект</ButtonLink>
+            <ButtonLink href="#contacts">{content.primaryAction}</ButtonLink>
             <ButtonLink href="#projects" variant="outline">
-              Смотреть проекты
+              {content.secondaryAction}
             </ButtonLink>
           </div>
           <div className="hero__stats">
-            {stats.map(([value, label]) => (
+            {content.stats.map(([value, label]) => (
               <div key={label}>
                 <strong>{value}</strong>
                 <span>{label}</span>
@@ -39,11 +30,7 @@ export function HeroSection() {
             ))}
           </div>
         </div>
-        <div
-          className="hero-visual"
-          aria-label="Абстрактная композиция цифрового интерфейса"
-          role="img"
-        >
+        <div className="hero-visual" aria-label={content.visualLabel} role="img">
           <div className="hero-visual__grid" />
           <div className="hero-visual__orb" />
           <span className="hero-visual__code">01 / DIGITAL SYSTEM</span>

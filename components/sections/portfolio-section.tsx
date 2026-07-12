@@ -1,26 +1,33 @@
 import { ArrowUpRight } from "lucide-react";
-import { projects } from "@/content/site-content";
+import type { Locale } from "@/i18n/config";
+import type { LandingContent } from "@/content/landing-content";
 import { ProjectMockup } from "@/components/ui/project-mockup";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 
-export function PortfolioSection() {
+export function PortfolioSection({
+  locale,
+  content,
+}: {
+  locale: Locale;
+  content: LandingContent["portfolio"];
+}) {
   return (
     <section className="section portfolio" id="projects">
       <div className="container">
         <Reveal>
           <SectionHeading
-            eyebrow="Избранные кейсы"
-            title="Проекты, которыми мы гордимся"
-            description="Проектируем продукты вокруг бизнес-метрик — от первого экрана до внутренней логики."
+            eyebrow={content.eyebrow}
+            title={content.title}
+            description={content.description}
           />
         </Reveal>
         <div className="portfolio__list">
-          {projects.map((project, index) => (
+          {content.projects.map((project, index) => (
             <Reveal key={project.name}>
               <article className="project">
                 <div className="project__visual">
-                  <ProjectMockup variant={project.variant} name={project.name} />
+                  <ProjectMockup variant={project.variant} name={project.name} locale={locale} />
                 </div>
                 <div className="project__info">
                   <span className="project__number">/ 0{index + 1}</span>
@@ -33,7 +40,7 @@ export function PortfolioSection() {
                     ))}
                   </div>
                   <a href="#contacts" data-analytics-event="portfolio_view">
-                    Смотреть проект <ArrowUpRight size={18} />
+                    {content.action} <ArrowUpRight size={18} />
                   </a>
                 </div>
               </article>

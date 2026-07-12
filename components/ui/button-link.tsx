@@ -16,7 +16,7 @@ export function ButtonLink({
     <a
       className={cn("button", `button--${variant}`)}
       href={href}
-      data-analytics-event={href === "#contacts" ? "project_discussion_click" : undefined}
+      data-analytics-event={href.endsWith("#contacts") ? "project_discussion_click" : undefined}
     >
       {children}
       {icon && <ArrowUpRight aria-hidden="true" size={18} />}

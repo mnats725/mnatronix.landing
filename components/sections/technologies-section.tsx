@@ -1,18 +1,18 @@
 import { Braces } from "lucide-react";
-import { technologies } from "@/content/site-content";
+import type { LandingContent } from "@/content/landing-content";
 import { Reveal } from "@/components/ui/reveal";
 
-export function TechnologiesSection() {
+export function TechnologiesSection({ content }: { content: LandingContent["technologies"] }) {
   return (
     <section className="technologies">
       <div className="container">
         <Reveal>
           <div className="technologies__header">
-            <p className="eyebrow">Технологии</p>
-            <h2>Используем проверенный стек</h2>
+            <p className="eyebrow">{content.eyebrow}</p>
+            <h2>{content.title}</h2>
           </div>
           <div className="technologies__list">
-            {technologies.map((technology) => (
+            {content.items.map((technology) => (
               <span key={technology}>
                 <Braces size={17} />
                 {technology}

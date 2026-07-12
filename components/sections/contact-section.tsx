@@ -1,13 +1,18 @@
 "use client";
 
 import { ArrowRight, Clock3, Mail, Phone, Send } from "lucide-react";
+import { useMessages } from "next-intl";
 import { siteConfig } from "@/config/site-config";
-import { budgets, projectTypes } from "@/content/site-content";
+import type { Locale } from "@/i18n/config";
+import { getLocalizedPath } from "@/i18n/config";
+import type { LandingContent } from "@/content/landing-content";
 import { useContactForm } from "@/features/contact/presentation/use-contact-form";
 import { Reveal } from "@/components/ui/reveal";
 
-export function ContactSection() {
-  const { state, submit } = useContactForm();
+export function ContactSection({ locale }: { locale: Locale }) {
+  const messages = useMessages();
+  const content = (messages.Landing as LandingContent).contact;
+  const { state, submit } = useContactForm(content.messages);
   const isSubmitting = state.status === "submitting";
 
   return (
@@ -15,52 +20,69 @@ export function ContactSection() {
       <div className="container">
         <Reveal>
           <div className="contacts__heading">
-            <p className="eyebrow">Связаться с нами</p>
-            <h2>Расскажите о вашем проекте</h2>
-            <p>Коротко опишите задачу — вернёмся с первыми вопросами и предложим следующий шаг.</p>
+            <p className="eyebrow">{content.eyebrow}</p>
+            <h2>{content.title}</h2>
+            <p>{content.text}</p>
           </div>
         </Reveal>
         <div className="contacts__layout">
           <Reveal className="contacts__panel">
             <form className="contact-form" onSubmit={submit} noValidate aria-busy={isSubmitting}>
               <label className="honeypot" aria-hidden="true">
-                Не заполняйте это поле
+                {content.honeypot}
                 <input name="website" tabIndex={-1} autoComplete="off" />
               </label>
               <div className="form-row">
-                <Field label="Имя" name="name" placeholder="Как к вам обращаться" required />
                 <Field
-                  label="Телефон или Telegram"
+                  label={content.fields.name}
+                  name="name"
+                  placeholder={content.fields.namePlaceholder}
+                  required
+                />
+                <Field
+                  label={content.fields.contact}
                   name="contact"
-                  placeholder="+7 999 000-00-00"
+                  placeholder={content.fields.contactPlaceholder}
                   required
                 />
               </div>
               <div className="form-row">
                 <Field
-                  label="Email"
+                  label={content.fields.email}
                   name="email"
                   type="email"
-                  placeholder="mail@company.ru"
+                  placeholder={content.fields.emailPlaceholder}
                   required
                 />
-                <SelectField label="Тип проекта" name="project-type" options={projectTypes} />
+                <SelectField
+                  label={content.fields.projectType}
+                  name="project-type"
+                  options={content.projectTypes}
+                  placeholder={content.fields.selectPlaceholder}
+                />
               </div>
               <label className="field">
-                <span>Описание задачи</span>
+                <span>{content.fields.message}</span>
                 <textarea
                   name="message"
                   rows={5}
-                  placeholder="Что нужно разработать и какую задачу решить?"
+                  placeholder={content.fields.messagePlaceholder}
                   required
                 />
               </label>
-              <SelectField label="Предполагаемый бюджет" name="budget" options={budgets} />
+              <SelectField
+                label={content.fields.budget}
+                name="budget"
+                options={content.budgets}
+                placeholder={content.fields.selectPlaceholder}
+              />
               <label className="checkbox">
                 <input type="checkbox" name="privacy" required />
                 <span>
-                  Я согласен с{" "}
-                  <a href={siteConfig.legal.privacyPath}>политикой обработки персональных данных</a>
+                  {content.fields.privacyPrefix}{" "}
+                  <a href={getLocalizedPath(locale, siteConfig.legal.privacyPath)}>
+                    {content.fields.privacyLink}
+                  </a>
                 </span>
               </label>
               {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
@@ -74,7 +96,7 @@ export function ContactSection() {
                 type="submit"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? "Отправляем…" : "Отправить заявку"} <ArrowRight size={18} />
+                {isSubmitting ? content.submitting : content.submit} <ArrowRight size={18} />
               </button>
               <div className="form-message" role="status" aria-live="polite" id="form-status">
                 {state.message && (
@@ -86,9 +108,9 @@ export function ContactSection() {
           <Reveal className="contacts__panel">
             <aside className="contact-card">
               <div>
-                <p className="eyebrow">Напрямую</p>
-                <h3>Предпочитаете написать сами?</h3>
-                <p>Свяжитесь с нами удобным способом. Отвечаем лично, без ботов и длинных анкет.</p>
+                <p className="eyebrow">{content.directEyebrow}</p>
+                <h3>{content.directTitle}</h3>
+                <p>{content.directText}</p>
               </div>
               <ul>
                 <ContactItem
@@ -105,19 +127,21 @@ export function ContactSection() {
                 />
                 <ContactItem
                   icon={<Phone />}
-                  label="Телефон"
+                  label={content.phoneLabel}
                   value={siteConfig.contacts.phone.display}
                   href={siteConfig.contacts.phone.href}
                 />
                 <ContactItem
                   icon={<Clock3 />}
-                  label="Время работы"
-                  value={siteConfig.contacts.workingHours}
+                  label={content.hoursLabel}
+                  value={
+                    locale === "ru" ? siteConfig.contacts.workingHours : "Mon–Fri, 10:00–19:00"
+                  }
                 />
               </ul>
               <div className="contact-card__note">
                 <span className="status-dot" />
-                Сейчас на связи
+                {content.online}
               </div>
             </aside>
           </Reveal>
@@ -138,13 +162,23 @@ function Field({
     </label>
   );
 }
-function SelectField({ label, name, options }: { label: string; name: string; options: string[] }) {
+function SelectField({
+  label,
+  name,
+  options,
+  placeholder,
+}: {
+  label: string;
+  name: string;
+  options: string[];
+  placeholder: string;
+}) {
   return (
     <label className="field">
       <span>{label}</span>
       <select name={name} required defaultValue="">
         <option value="" disabled>
-          Выберите вариант
+          {placeholder}
         </option>
         {options.map((option) => (
           <option key={option}>{option}</option>

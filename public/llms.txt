@@ -1,25 +1,26 @@
 # MNATRONIX LABS
 
-> Российская IT-компания: проектирование, разработка и поддержка сайтов, интернет-магазинов и веб-сервисов под ключ.
+> Проектирование, разработка и поддержка сайтов, интернет-магазинов и веб-сервисов под ключ. Website and web application design, development and support.
 
-MNATRONIX LABS создаёт цифровые продукты для бизнеса. Основные направления: корпоративные сайты, интернет-магазины, landing page, веб-сервисы, UI/UX-дизайн, развитие и техническая поддержка.
+## Языки / Languages
 
-## Основные разделы
+- [Русская версия](https://mnats725-mnatronix-landing-328a.twc1.net/)
+- [English version](https://mnats725-mnatronix-landing-328a.twc1.net/en/)
 
-- [О компании](https://mnatronix.ru/#about): Подход MNATRONIX LABS к проектированию и разработке цифровых продуктов.
-- [Услуги](https://mnatronix.ru/#services): Виды сайтов, веб-сервисов и сопутствующих услуг.
-- [Преимущества](https://mnatronix.ru/#benefits): Принципы работы, гарантии качества и технический подход.
-- [Проекты](https://mnatronix.ru/#projects): Примеры реализованных цифровых продуктов и используемые технологии.
-- [Этапы работы](https://mnatronix.ru/#process): Процесс от знакомства и аналитики до запуска и поддержки.
-- [Обсудить проект](https://mnatronix.ru/#contacts): Форма заявки и способы связи с командой.
+## Услуги / Services
 
-## Документы
+- [Направления работы](https://mnats725-mnatronix-landing-328a.twc1.net/#services)
+- [Services in English](https://mnats725-mnatronix-landing-328a.twc1.net/en/#services)
 
-- [Политика конфиденциальности](https://mnatronix.ru/privacy/): Правила обработки и защиты персональных данных.
-- [Пользовательское соглашение](https://mnatronix.ru/terms/): Условия использования сайта.
-- [Карта сайта](https://mnatronix.ru/sitemap.xml): Индекс публичных страниц сайта.
+## Разделы / Sections
 
-## Контакты
+- [О компании](https://mnats725-mnatronix-landing-328a.twc1.net/#about)
+- [Проекты](https://mnats725-mnatronix-landing-328a.twc1.net/#projects)
+- [Этапы работы](https://mnats725-mnatronix-landing-328a.twc1.net/#process)
+- [Обсудить проект](https://mnats725-mnatronix-landing-328a.twc1.net/#contacts)
+- [Карта сайта](https://mnats725-mnatronix-landing-328a.twc1.net/sitemap.xml)
 
-- [Telegram](https://t.me/mnatronix): Основной канал оперативной связи.
-- [Email](mailto:mnatssteam@mail.ru): Электронная почта MNATRONIX LABS.
+## Контакты / Contact
+
+- [Telegram](https://t.me/mnatronix)
+- [Email](mailto:mnatssteam@mail.ru)

@@ -296,6 +296,24 @@ a {
   gap: 8px;
   flex-shrink: 0;
 }
+.language-switch {
+  width: 42px;
+  min-height: 42px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.language-switch:hover {
+  color: var(--blue);
+  border-color: var(--blue);
+}
 .theme-toggle {
   width: 42px;
   height: 42px;
@@ -748,22 +766,14 @@ a {
   gap: 18px;
 }
 .service-card {
+  display: block;
   height: 100%;
-  min-height: 285px;
+  min-height: 390px;
   padding: 30px;
   position: relative;
   background: var(--white);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  transition:
-    transform 0.3s,
-    border-color 0.3s,
-    box-shadow 0.3s;
-}
-.service-card:hover {
-  transform: translateY(-7px);
-  border-color: var(--blue);
-  box-shadow: var(--shadow);
 }
 .service-card__index {
   position: absolute;
@@ -791,20 +801,18 @@ a {
   font-size: 14px;
   line-height: 1.7;
 }
-.service-card__arrow {
+.service-card__insight {
   position: absolute;
-  right: 25px;
-  bottom: 26px;
-  color: var(--blue);
-  opacity: 0;
-  transform: translate(-5px, 5px);
-  transition: 0.25s;
+  right: 30px;
+  bottom: 25px;
+  left: 30px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
 }
-.service-card:hover .service-card__arrow {
-  opacity: 1;
-  transform: none;
-}
-
 /* Benefits */
 .benefits {
   background: var(--pale);
@@ -1516,8 +1524,11 @@ a {
   .header-actions .header-cta {
     order: 1;
   }
-  .header-actions .theme-toggle {
+  .header-actions .language-switch {
     order: 2;
+  }
+  .header-actions .theme-toggle {
+    order: 3;
   }
   .menu-button {
     display: grid;
@@ -1609,6 +1620,10 @@ a {
     border-bottom: 1px solid var(--line);
     color: var(--muted);
     font-size: 14px;
+  }
+  .mobile-nav__language {
+    color: var(--blue);
+    font-weight: 700;
   }
   .hero {
     min-height: auto;

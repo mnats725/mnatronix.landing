@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import { siteConfig } from "@/config/site-config";
 import { LegalPage } from "@/components/legal/legal-page";
 
-export const metadata: Metadata = { title: `Пользовательское соглашение | ${siteConfig.name}` };
+export const metadata: Metadata = {
+  title: `Пользовательское соглашение | ${siteConfig.name}`,
+  alternates: { canonical: "/terms", languages: { ru: "/terms", en: "/en/terms" } },
+};
 
 const sections = [
   {

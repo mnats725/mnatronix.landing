@@ -11,7 +11,8 @@ test("публикует карту сайта для ИИ-агентов", asyn
 
   expect(response.ok()).toBe(true);
   expect(content).toMatch(/^# MNATRONIX LABS/m);
-  expect(content).toContain("[Услуги](https://mnatronix.ru/#services)");
+  expect(content).toContain("/#services");
+  expect(content).toContain("/en/");
 });
 
 test("публикует изображение для социальных превью", async ({ page, request }) => {
@@ -32,7 +33,24 @@ test("публикует изображение для социальных пр
 test("показывает основное предложение и форму", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Создаём сайты");
+  await expect(page.locator(".service-card__insight").first()).toContainText(
+    "Репутация начинает работать",
+  );
+  await expect(page.locator(".service-card")).toHaveCount(6);
+  await expect(page.locator("a.service-card")).toHaveCount(0);
   await expect(page.getByRole("heading", { name: "Расскажите о вашем проекте" })).toBeVisible();
+});
+
+test("не публикует отдельные страницы услуг", async ({ request }) => {
+  const response = await request.get("/services/corporate-websites/");
+  expect(response.status()).toBe(404);
+});
+
+test("публикует английскую версию и переключает язык", async ({ page }) => {
+  await page.goto("/en/");
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("We build websites");
+  await expect(page.locator('link[rel="alternate"][hreflang="ru"]')).toHaveAttribute("href", /\/$/);
 });
 
 test("подсвечивает пункт навигации для текущей секции", async ({ page }) => {
@@ -51,6 +69,7 @@ test("располагает действия шапки в соответств
   const header = page.locator(".site-header__inner");
   const headerTheme = header.getByRole("button", { name: /тему|тема/i });
   const headerCta = header.getByRole("link", { name: "Обсудить проект" });
+  const languageSwitch = header.getByRole("link", { name: "English version", exact: true });
   const menuButton = header.getByRole("button", { name: "Открыть меню" });
 
   if (viewportWidth <= 760) {
@@ -61,6 +80,7 @@ test("располагает действия шапки в соответств
     return;
   }
 
+  await expect(languageSwitch).toHaveText("EN");
   await expect(headerTheme).toBeVisible();
   await expect(headerCta).toBeVisible();
 
@@ -68,9 +88,11 @@ test("располагает действия шапки в соответств
     await expect(menuButton).toBeVisible();
     const ctaBox = await headerCta.boundingBox();
     const themeBox = await headerTheme.boundingBox();
+    const languageBox = await languageSwitch.boundingBox();
     const menuBox = await menuButton.boundingBox();
-    expect(ctaBox && themeBox && menuBox).toBeTruthy();
-    expect(ctaBox!.x).toBeLessThan(themeBox!.x);
+    expect(ctaBox && languageBox && themeBox && menuBox).toBeTruthy();
+    expect(ctaBox!.x).toBeLessThan(languageBox!.x);
+    expect(languageBox!.x).toBeLessThan(themeBox!.x);
     expect(themeBox!.x).toBeLessThan(menuBox!.x);
   }
 });

@@ -12,7 +12,15 @@ type FormState = {
 
 const initialState: FormState = { status: "idle", message: "" };
 
-export function useContactForm() {
+export type ContactFormMessages = {
+  validation: string;
+  submitting: string;
+  mailClient: string;
+  success: string;
+  error: string;
+};
+
+export function useContactForm(messages: ContactFormMessages) {
   const [state, setState] = useState<FormState>(initialState);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
@@ -20,13 +28,13 @@ export function useContactForm() {
     const form = event.currentTarget;
 
     if (!form.checkValidity()) {
-      setState({ status: "error", message: "Проверьте заполнение обязательных полей." });
+      setState({ status: "error", message: messages.validation });
       form.reportValidity();
       trackEvent("contact_form_validation_error");
       return;
     }
 
-    setState({ status: "submitting", message: "Отправляем заявку…" });
+    setState({ status: "submitting", message: messages.submitting });
 
     try {
       const delivery = await deliverContactRequest(createContactPayload(new FormData(form)));
@@ -34,7 +42,7 @@ export function useContactForm() {
       if (delivery.kind === "mail-client") {
         setState({
           status: "success",
-          message: "Заявка подготовлена. Завершите отправку в открывшемся почтовом приложении.",
+          message: messages.mailClient,
         });
         window.location.assign(delivery.mailtoHref);
         trackEvent("contact_form_success");
@@ -44,13 +52,13 @@ export function useContactForm() {
       form.reset();
       setState({
         status: "success",
-        message: "Спасибо! Заявка отправлена. Мы свяжемся с вами в течение рабочего дня.",
+        message: messages.success,
       });
       trackEvent("contact_form_success");
-    } catch (error) {
+    } catch {
       setState({
         status: "error",
-        message: error instanceof Error ? error.message : "Не удалось отправить заявку",
+        message: messages.error,
       });
       trackEvent("contact_form_submit_error");
     }

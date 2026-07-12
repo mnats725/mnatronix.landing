@@ -1,30 +1,18 @@
 import { ArrowDownRight } from "lucide-react";
 import { Reveal } from "@/components/ui/reveal";
+import type { LandingContent } from "@/content/landing-content";
 
-const principles = [
-  "Погружаемся в бизнес",
-  "Думаем о пользователях",
-  "Создаём решения с запасом на рост",
-];
-
-export function AboutSection() {
+export function AboutSection({ content }: { content: LandingContent["about"] }) {
   return (
     <section className="section about" id="about">
       <div className="container">
         <Reveal>
           <div className="about__top">
             <div>
-              <p className="eyebrow">О компании</p>
-              <h2>
-                Превращаем идеи в<br />
-                работающие продукты
-              </h2>
+              <p className="eyebrow">{content.eyebrow}</p>
+              <h2>{content.title}</h2>
             </div>
-            <p className="about__text">
-              Мы создаём не просто красивые страницы, а полноценные цифровые решения. Изучаем задачи
-              бизнеса, проектируем архитектуру, разрабатываем интерфейс и доводим продукт до
-              стабильного запуска.
-            </p>
+            <p className="about__text">{content.text}</p>
           </div>
           <div className="about__wordmark">
             <span>DESIGN</span>
@@ -34,7 +22,7 @@ export function AboutSection() {
             <span>GROWTH</span>
           </div>
           <div className="principles">
-            {principles.map((item, index) => (
+            {content.principles.map((item, index) => (
               <article key={item}>
                 <span>0{index + 1}</span>
                 <h3>{item}</h3>
