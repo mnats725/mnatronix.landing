@@ -19,9 +19,9 @@
     "prepare": "node scripts/prepare.mjs"
   },
   "dependencies": {
-    "@sentry/browser": "^10.65.0",
-    "@sentry/nextjs": "^10.65.0",
-    "lucide-react": "^0.468.0",
+    "@sentry/browser": "^10.66.0",
+    "@sentry/nextjs": "^10.66.0",
+    "lucide-react": "^1.25.0",
     "next": "^16.2.10",
     "next-intl": "^4.13.2",
     "react": "^19.0.0",
